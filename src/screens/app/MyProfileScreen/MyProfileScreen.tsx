@@ -3,10 +3,12 @@ import React from 'react';
 import {Button, Screen, Text} from '@components';
 import {AppTabScreenProps} from '@routes';
 
-export function HomeScreen({navigation}: AppTabScreenProps<'HomeScreen'>) {
+export function MyProfileScreen({
+  navigation,
+}: AppTabScreenProps<'MyProfileScreen'>) {
   return (
     <Screen>
-      <Text preset="headingLarge">Home Screen</Text>
+      <Text preset="headingLarge">My Profile Screen</Text>
       <Button
         title="settings"
         onPress={() => navigation.navigate('SettingsScreen')}
