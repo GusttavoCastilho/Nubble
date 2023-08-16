@@ -5,5 +5,6 @@ export * from './PostComment/postCommentTypes';
 
 export * from './Post/useCases/usePostList';
 export * from './PostComment/useCases/usePostCommentList';
+export * from './PostComment/useCases/usePostCommentCreate';
 
 export * from './hooks/usePaginatedList';

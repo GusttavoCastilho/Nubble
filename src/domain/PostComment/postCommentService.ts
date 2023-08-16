@@ -21,6 +21,12 @@ async function getList(
   };
 }
 
+async function create(postId: number, content: string): Promise<PostComment> {
+  const postCommentAPI = await postCommentApi.create(postId, content);
+  return postCommentAdapter.toPostComment(postCommentAPI);
+}
+
 export const postCommentService = {
   getList,
+  create,
 };
