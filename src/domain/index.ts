@@ -6,5 +6,6 @@ export * from './PostComment/postCommentTypes';
 export * from './Post/useCases/usePostList';
 export * from './PostComment/useCases/usePostCommentList';
 export * from './PostComment/useCases/usePostCommentCreate';
+export * from './PostComment/useCases/usePostCommentRemove';
 
-export * from './hooks/usePaginatedList';
+export * from './Auth/hooks/useUser';
