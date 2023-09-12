@@ -9,6 +9,10 @@ export * from './PostComment/useCases/usePostCommentCreate';
 export * from './PostComment/useCases/usePostCommentRemove';
 
 export * from './Auth/hooks/useUser';
+export * from './Auth/useCases/useAuthSignIn';
+export * from './Auth/useCases/useAuthSignOut';
+export * from './Auth/authTypes';
+export * from './Auth/authService';
 
 export * from './User/userService';
 export * from './User/userTypes';
