@@ -3,4 +3,5 @@ export enum QueryKeys {
   PostList = 'PostList',
   PostCommentList = 'PostCommentList',
   IsUserNameAvailable = 'IsUserNameAvailable',
+  IsEmailAvailable = 'IsEmailAvailable',
 }
