@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useAuthSignUp} from '@domain';
+import {useAuthIsValueAvailable, useAuthSignUp} from '@domain';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useForm} from 'react-hook-form';
 
@@ -10,6 +10,7 @@ import {
   Button,
   FormTextInput,
   FormPasswordTextInput,
+  ActivityIndicator,
 } from '@components';
 import {useResetNavigationSuccess} from '@hooks';
 import {AuthScreenProps, AuthStackParamList} from '@routes';
@@ -40,10 +41,20 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
       reset(resetParam);
     },
   });
-  const {control, formState, handleSubmit} = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
-    defaultValues,
-    mode: 'onChange',
+  const {control, formState, handleSubmit, watch, getFieldState} =
+    useForm<SignUpSchema>({
+      resolver: zodResolver(signUpSchema),
+      defaultValues,
+      mode: 'onChange',
+    });
+
+  const username = watch('username');
+  const usernameState = getFieldState('username');
+  const usernameIsValid = !usernameState.invalid && usernameState.isDirty;
+
+  const userNameQuery = useAuthIsValueAvailable({
+    username,
+    enabled: usernameIsValid,
   });
 
   function submitForm(formValues: SignUpSchema) {
@@ -63,6 +74,11 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
         label="Seu username"
         placeholder="@"
         boxProps={{mb: 's20'}}
+        RightComponent={
+          userNameQuery.isFetching ? (
+            <ActivityIndicator size="small" />
+          ) : undefined
+        }
       />
 
       <FormTextInput
@@ -121,7 +137,7 @@ export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
       <Button
         title="Criar uma conta"
         onPress={handleSubmit(submitForm)}
-        disabled={!formState.isValid}
+        disabled={!formState.isValid || userNameQuery.isFetching}
         loading={isLoading}
       />
     </Screen>
