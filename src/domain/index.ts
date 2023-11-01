@@ -13,6 +13,7 @@ export * from './Auth/useCases/useAuthSignIn';
 export * from './Auth/useCases/useAuthSignOut';
 export * from './Auth/useCases/useAuthSignUp';
 export * from './Auth/useCases/useAuthIsValueAvailable';
+export * from './Auth/useCases/useAuthRequestNewPassword';
 export * from './Auth/authTypes';
 export * from './Auth/authService';
 
