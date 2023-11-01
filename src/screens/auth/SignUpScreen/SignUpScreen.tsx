@@ -1,6 +1,6 @@
 import React from 'react';
-import {Alert} from 'react-native';
 
+import {useAuthSignUp} from '@domain';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useForm} from 'react-hook-form';
 
@@ -12,34 +12,42 @@ import {
   FormPasswordTextInput,
 } from '@components';
 import {useResetNavigationSuccess} from '@hooks';
-import {AuthScreenProps} from '@routes';
+import {AuthScreenProps, AuthStackParamList} from '@routes';
 
 import {SignUpSchema, signUpSchema} from './signUpSchema';
 
-export function SignUpScreen({navigation}: AuthScreenProps<'SignUpScreen'>) {
+const resetParam: AuthStackParamList['SuccessScreen'] = {
+  title: 'Sua conta foi criado com sucesso!',
+  description: 'Agora é só fazer login na nossa plataforma',
+  icon: {
+    name: 'checkRound',
+    color: 'success',
+  },
+};
+
+const defaultValues: SignUpSchema = {
+  username: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+};
+
+export function SignUpScreen({}: AuthScreenProps<'SignUpScreen'>) {
+  const {reset} = useResetNavigationSuccess();
+  const {isLoading, signUp} = useAuthSignUp({
+    onSuccess: () => {
+      reset(resetParam);
+    },
+  });
   const {control, formState, handleSubmit} = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
-    defaultValues: {
-      username: '',
-      fullName: '',
-      email: '',
-      password: '',
-    },
+    defaultValues,
     mode: 'onChange',
   });
 
-  const {reset} = useResetNavigationSuccess();
-
-  function submitForm({email}: SignUpSchema) {
-    Alert.alert(email);
-    reset({
-      title: 'Sua conta foi criado com sucesso!',
-      description: 'Agora é só fazer login na nossa plataforma',
-      icon: {
-        name: 'checkRound',
-        color: 'success',
-      },
-    });
+  function submitForm(formValues: SignUpSchema) {
+    signUp(formValues);
   }
   return (
     <Screen canGoBack scrollable>
@@ -59,12 +67,24 @@ export function SignUpScreen({navigation}: AuthScreenProps<'SignUpScreen'>) {
 
       <FormTextInput
         control={control}
-        name="fullName"
+        name="firstName"
         rules={{
           required: 'Nome Completo é obrigatório',
         }}
-        label="Nome completo"
-        placeholder="Digite seu nome completo"
+        label="Nome"
+        placeholder="Digite seu nome"
+        boxProps={{mb: 's20'}}
+        autoCapitalize="words"
+      />
+
+      <FormTextInput
+        control={control}
+        name="lastName"
+        rules={{
+          required: 'Nome Completo é obrigatório',
+        }}
+        label="Sobrenome"
+        placeholder="Digite seu sobrenome"
         boxProps={{mb: 's20'}}
         autoCapitalize="words"
       />
@@ -102,6 +122,7 @@ export function SignUpScreen({navigation}: AuthScreenProps<'SignUpScreen'>) {
         title="Criar uma conta"
         onPress={handleSubmit(submitForm)}
         disabled={!formState.isValid}
+        loading={isLoading}
       />
     </Screen>
   );
