@@ -6,6 +6,10 @@ function formatRelative(dateISO: string): string {
 
   const diffInSeconds = differenceInSeconds(now, date);
 
+  if (diffInSeconds < 0) {
+    return format(date, 'dd/MM/yyyy');
+  }
+
   if (diffInSeconds < 60) {
     return `${diffInSeconds} s`;
   }
