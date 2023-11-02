@@ -34,10 +34,10 @@ function formatRelative(dateISO: string): string {
     return `${diffInWeeks} sem`;
   }
 
-  const diffInMonths = Math.floor(diffInWeeks / 30);
+  const diffInMonths = Math.floor(diffInDays / 30);
 
   if (diffInMonths < 12) {
-    return `${diffInMonths} m`;
+    return `${diffInMonths} mes`;
   }
 
   return format(date, 'dd/MM/yyyy');
