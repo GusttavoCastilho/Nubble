@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest",
+    "test": "jest --verbose",
+    "coverage": "jest --coverage",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -55,6 +56,9 @@
   },
   "jest": {
     "preset": "react-native",
+    "setupFiles": [
+      "<rootDir>/src/test/jest-setup.ts"
+    ],
     "collectCoverageFrom": [
       "src/{components,utils}/**/*.{ts,tsx}"
     ],
@@ -66,6 +70,9 @@
     "moduleDirectories": [
       "node_modules",
       "./src/test"
+    ],
+    "modulePathIgnorePatterns": [
+      ".*/mockedData/.*"
     ]
   }
 }

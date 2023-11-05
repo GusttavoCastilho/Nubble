@@ -4,4 +4,6 @@
 npm run lint
 
 npm tsc --noEmit
+
+npm run test
 ```
