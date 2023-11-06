@@ -60,7 +60,7 @@
       "<rootDir>/src/test/jest-setup.ts"
     ],
     "collectCoverageFrom": [
-      "src/{components,utils}/**/*.{ts,tsx}"
+      "src/{components,utils,hooks}/**/*.{ts,tsx}"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
