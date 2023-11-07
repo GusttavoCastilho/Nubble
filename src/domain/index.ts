@@ -8,7 +8,6 @@ export * from './PostComment/useCases/usePostCommentList';
 export * from './PostComment/useCases/usePostCommentCreate';
 export * from './PostComment/useCases/usePostCommentRemove';
 
-export * from './Auth/hooks/useUser';
 export * from './Auth/useCases/useAuthSignIn';
 export * from './Auth/useCases/useAuthSignOut';
 export * from './Auth/useCases/useAuthSignUp';
