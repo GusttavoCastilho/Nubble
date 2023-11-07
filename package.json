@@ -52,27 +52,7 @@
     "metro-react-native-babel-preset": "0.73.9",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.2.0",
+    "ts-node": "^10.9.1",
     "typescript": "4.8.4"
-  },
-  "jest": {
-    "preset": "react-native",
-    "setupFiles": [
-      "<rootDir>/src/test/jest-setup.ts"
-    ],
-    "collectCoverageFrom": [
-      "src/{components,utils,hooks,domain}/**/*.{ts,tsx}"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "index"
-    ],
-    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"],
-    "moduleDirectories": [
-      "node_modules",
-      "./src/test"
-    ],
-    "modulePathIgnorePatterns": [
-      ".*/mockedData/.*"
-    ]
   }
 }
