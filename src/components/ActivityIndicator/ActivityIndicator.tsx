@@ -13,5 +13,11 @@ interface Props extends Omit<ActivityIndicatorProps, 'color'> {
 
 export function ActivityIndicator({color = 'primary', ...rest}: Props) {
   const {colors} = useAppTheme();
-  return <RNActivityIndicator color={colors[color]} {...rest} />;
+  return (
+    <RNActivityIndicator
+      color={colors[color]}
+      testID="activity-indicator"
+      {...rest}
+    />
+  );
 }

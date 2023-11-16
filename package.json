@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest --verbose",
-    "coverage": "jest --coverage",
+    "coverage": "jest --verbose --coverage",
     "prepare": "husky install",
     "pre-commit": "yarn lint && yarn tsc --noEmit && yarn test"
   },
