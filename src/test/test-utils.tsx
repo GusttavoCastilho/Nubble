@@ -10,6 +10,7 @@ import {
 } from '@tanstack/react-query';
 import {RenderOptions, render, renderHook} from '@testing-library/react-native';
 
+import {Toast} from '@components';
 import {theme} from '@theme';
 
 const queryClientConfig: QueryClientConfig = {
@@ -49,6 +50,7 @@ export const wrapperScreenProviders = () => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <NavigationContainer>{children}</NavigationContainer>
+          <Toast />
         </ThemeProvider>
       </QueryClientProvider>
     </AuthCredentialsProvider>

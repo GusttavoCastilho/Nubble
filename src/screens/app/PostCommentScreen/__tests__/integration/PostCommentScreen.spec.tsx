@@ -1,49 +1,124 @@
 import React from 'react';
+import {Alert, AlertButton} from 'react-native';
 
-import {server} from '@test';
-import {fireEvent, renderScreen} from 'test-utils';
+import {AuthCredentialsStorage} from '@services';
+import {server, mockedPostComment, resetInMemoryResponse} from '@test';
+import {
+  act,
+  fireEvent,
+  renderScreen,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from 'test-utils';
 
 import {PostCommentScreen} from '../../PostCommentScreen';
 
-beforeAll(() => server.listen());
+beforeAll(() => {
+  server.listen();
+  jest.useFakeTimers();
+});
 
-afterEach(() => server.resetHandlers());
+afterEach(() => {
+  server.resetHandlers();
+  resetInMemoryResponse();
+});
 
-afterAll(() => server.close());
+afterAll(() => {
+  server.close();
+  jest.resetAllMocks();
+  jest.useRealTimers();
+});
 
 describe('integration: PostCommentScreen', () => {
-  it('when ADDING a comment the list is automatically updated', async () => {
-    const {findByText, getByPlaceholderText, getByText, findAllByTestId} =
-      renderScreen(
-        <PostCommentScreen
-          navigation={{} as any}
-          route={{
-            name: 'PostCommentScreen',
-            key: 'PostCommentScreen',
-            params: {
-              postId: 1,
-              postAuthorId: 1,
-            },
-          }}
-        />,
-      );
+  test('When ADDING a comment, the list is automatically updated', async () => {
+    renderScreen(
+      <PostCommentScreen
+        navigation={{} as any}
+        route={{
+          name: 'PostCommentScreen',
+          key: 'PostCommentScreen',
+          params: {
+            postId: 1,
+            postAuthorId: 1,
+          },
+        }}
+      />,
+    );
 
-    const comment = await findByText(/comentário aleatório/i);
+    const comment = await screen.findByText(/comentário aleatório/i);
 
     expect(comment).toBeTruthy();
 
-    const inputText = getByPlaceholderText(/Adicione um comentário/i);
+    const inputText = screen.getByPlaceholderText(/Adicione um comentário/i);
 
-    fireEvent.changeText(inputText, 'Novo comentário');
+    fireEvent.changeText(inputText, 'novo comentário');
 
-    fireEvent.press(getByText(/enviar/i));
+    fireEvent.press(screen.getByText(/enviar/i));
 
-    const newComment = await findByText(/novo comentário/i);
-
+    const newComment = await screen.findByText(/novo comentário/i);
     expect(newComment).toBeTruthy();
 
-    const comments = await findAllByTestId('post-comment-id');
+    const comments = await screen.findAllByTestId('post-comment-id');
 
-    expect(comments).toHaveLength(2);
+    expect(comments.length).toBe(3);
+  });
+
+  test('When DELETING a comment, the list is automatically updated and a toast message is displayed ', async () => {
+    jest
+      .spyOn(AuthCredentialsStorage, 'get')
+      .mockResolvedValue(mockedPostComment.mateusAuthCredentials);
+
+    let mockedConfirm: AlertButton['onPress'];
+    const mockedAlert = jest
+      .spyOn(Alert, 'alert')
+      .mockImplementation((title, message, buttons) => {
+        if (buttons && buttons[0]) {
+          mockedConfirm = buttons[0].onPress;
+        }
+      });
+
+    renderScreen(
+      <PostCommentScreen
+        navigation={{} as any}
+        route={{
+          name: 'PostCommentScreen',
+          key: 'PostCommentScreen',
+          params: {
+            postId: 1,
+            postAuthorId: 1,
+          },
+        }}
+      />,
+    );
+
+    const comment = await screen.findByText(
+      mockedPostComment.mateusPostCommentAPI.message,
+      {exact: false},
+    );
+
+    fireEvent(comment, 'longPress');
+
+    expect(mockedAlert).toHaveBeenCalled();
+
+    mockedConfirm && mockedConfirm();
+
+    await waitForElementToBeRemoved(() =>
+      screen.getByText(mockedPostComment.mateusPostCommentAPI.message, {
+        exact: false,
+      }),
+    );
+
+    const comments = await screen.findAllByTestId('post-comment-id');
+
+    expect(comments.length).toBe(1);
+
+    await waitFor(() =>
+      expect(screen.getByTestId('toast-message')).toBeTruthy(),
+    );
+
+    act(() => jest.runAllTimers());
+
+    expect(screen.queryByTestId('toast-message')).toBeNull();
   });
 });

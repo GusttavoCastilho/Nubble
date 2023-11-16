@@ -12,7 +12,6 @@ interface Props {
   userId: number | null;
   postAuthorId: number;
 }
-
 export function PostCommentItem({
   postId,
   postComment,
@@ -22,9 +21,10 @@ export function PostCommentItem({
   const {showToast} = useToastService();
   const {mutate} = usePostCommentRemove(postId, {
     onSuccess: () => {
-      showToast({message: 'Comentário deletado'});
+      showToast({message: 'Cometário deletado'});
     },
   });
+
   const isAllowToDelete = postCommentService.isAllowToDelete(
     postComment,
     userId,
