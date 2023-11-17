@@ -26,10 +26,10 @@ export function TextMessage({
     inputRef.current?.focus();
   }
 
-  const sendIsDisabled = value?.trim().length === 0;
+  const sendIsDisabled = !value || value.trim().length === 0;
 
   return (
-    <Pressable onPressIn={focusInput}>
+    <Pressable onPressIn={focusInput} testID="text-message">
       <Box
         paddingHorizontal="s16"
         paddingVertical="s14"
