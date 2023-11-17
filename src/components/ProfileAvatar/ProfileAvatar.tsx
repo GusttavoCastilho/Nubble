@@ -15,6 +15,7 @@ export function ProfileAvatar({
 }: ProfileAvatarProps) {
   return (
     <Image
+      testID="profile-avatar"
       source={{uri: imageURL}}
       style={{width: size, height: size, borderRadius}}
     />
