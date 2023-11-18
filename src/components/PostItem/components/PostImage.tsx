@@ -10,6 +10,7 @@ export function PostImage({imageURL}: Props) {
     <Image
       source={{uri: imageURL}}
       resizeMode="cover"
+      testID="post-image"
       style={{
         width: Dimensions.get('screen').width,
         height: 300,
