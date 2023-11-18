@@ -19,7 +19,7 @@ export function PostBottom({author, text, commentCount, id}: Props) {
   }
 
   return (
-    <Box mt="s16">
+    <Box mt="s16" testID="post-bottom">
       <Text preset="paragraphMedium" bold>
         {author.userName}
       </Text>
