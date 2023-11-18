@@ -26,6 +26,7 @@ export function PostActions({
           marked: 'heartFill',
         }}
         text={reactionCount}
+        testId="like-button"
       />
       <Item
         marked={false}
@@ -57,15 +58,17 @@ interface ItemProps {
     marked: IconProps['name'];
   };
   text: number;
+  testId?: string;
 }
 
-function Item({icon, marked, onPress, text}: ItemProps) {
+function Item({icon, marked, onPress, text, testId}: ItemProps) {
   return (
     <TouchableOpacityBox
       flexDirection="row"
       alignItems="center"
       mr="s24"
-      onPress={onPress}>
+      onPress={onPress}
+      testID={testId}>
       <Icon
         name={marked ? icon.marked : icon.default}
         color={marked ? 'marked' : undefined}
