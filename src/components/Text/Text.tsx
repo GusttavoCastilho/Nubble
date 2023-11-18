@@ -19,9 +19,9 @@ export interface TextProps extends SRTextProps {
 export function Text({
   children,
   preset = 'paragraphMedium',
-  bold,
-  italic,
-  semiBold,
+  bold = false,
+  italic = false,
+  semiBold = false,
   style,
   ...rest
 }: TextProps) {
@@ -54,10 +54,10 @@ function getFontFamily(
       return $fontFamily.boldItalic;
     case bold:
       return $fontFamily.bold;
-    case italic:
-      return $fontFamily.italic;
     case semiBold && italic:
       return $fontFamily.mediumItalic;
+    case italic:
+      return $fontFamily.italic;
     case semiBold:
       return $fontFamily.medium;
     default:
