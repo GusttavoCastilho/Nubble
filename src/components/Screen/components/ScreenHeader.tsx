@@ -21,6 +21,7 @@ export function ScreenHeader({title}: Props) {
       <TouchableOpacityBox
         onPress={handleGoBack}
         flexDirection="row"
+        testID="back-button"
         alignItems="center">
         <Icon name="arrowLeft" color="primary" />
         {!title && (
