@@ -44,4 +44,14 @@ describe('<PostBottom />', () => {
       postAuthorId: mockedPost.author.id,
     });
   });
+
+  it('should render the Ver Comentário text when commentCount is 1', () => {
+    const {queryAllByText} = render(
+      <PostBottom {...mockedPost} commentCount={1} />,
+    );
+
+    const commentLinkElement = queryAllByText(/Ver Comentário/);
+
+    expect(commentLinkElement).toBeTruthy();
+  });
 });
