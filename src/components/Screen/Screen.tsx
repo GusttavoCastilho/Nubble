@@ -11,6 +11,7 @@ export interface ScreenProps extends BoxProps {
   canGoBack?: boolean;
   scrollable?: boolean;
   title?: string;
+  HeaderComponent?: React.ReactNode;
 }
 
 export function Screen({
@@ -19,6 +20,7 @@ export function Screen({
   scrollable = false,
   style,
   title,
+  HeaderComponent,
   ...boxProps
 }: ScreenProps) {
   const {top, bottom} = useAppSafeArea();
@@ -35,7 +37,9 @@ export function Screen({
           paddingHorizontal="s24"
           style={[{paddingTop: top, paddingBottom: bottom}, style]}
           {...boxProps}>
-          {canGoBack && <ScreenHeader title={title} />}
+          {canGoBack && (
+            <ScreenHeader HeaderComponent={HeaderComponent} title={title} />
+          )}
           {children}
         </Box>
       </Container>
