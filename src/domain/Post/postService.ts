@@ -8,10 +8,7 @@ import {Post} from './postTypes';
 async function getList(page: number): Promise<Page<Post>> {
   const postPageAPI = await postApi.getList({page, per_page: 10});
 
-  return {
-    data: postPageAPI.data.map(postAPI => postAdapter.toPost(postAPI)),
-    meta: apiAdapter.toMetaDataPage(postPageAPI.meta),
-  };
+  return apiAdapter.toPageModel(postPageAPI, postAdapter.toPost);
 }
 
 export const postService = {
