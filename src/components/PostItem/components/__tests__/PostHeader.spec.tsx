@@ -2,7 +2,7 @@ import React from 'react';
 
 import {fireEvent, render, screen} from 'test-utils';
 
-import {PostHeader} from '../PostHeader';
+import {PostHeader} from '../../../ProfileUser/ProfileUser';
 
 import {mockedAuthor} from './mockedData/mockedPost';
 
