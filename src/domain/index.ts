@@ -20,4 +20,5 @@ export * from './Auth/authService';
 export * from './User/userService';
 export * from './User/userTypes';
 export * from './User/useCases/useUserGetById';
+export * from './User/useCases/useUserSearch';
 export * from './User/userAdapter';
