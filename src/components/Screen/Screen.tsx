@@ -4,14 +4,14 @@ import {KeyboardAvoidingView, Platform} from 'react-native';
 import {Box, BoxProps} from '@components';
 import {useAppSafeArea, useAppTheme} from '@hooks';
 
-import {ScrollViewContainer, ViewContainer, ScreenHeader} from './components/';
+import {ScrollViewContainer, ViewContainer, ScreenHeader} from './components';
 
 export interface ScreenProps extends BoxProps {
   children: React.ReactNode;
+  HeaderComponent?: React.ReactNode;
   canGoBack?: boolean;
   scrollable?: boolean;
   title?: string;
-  HeaderComponent?: React.ReactNode;
 }
 
 export function Screen({
@@ -23,11 +23,10 @@ export function Screen({
   HeaderComponent,
   ...boxProps
 }: ScreenProps) {
-  const {top, bottom} = useAppSafeArea();
+  const {bottom, top} = useAppSafeArea();
   const {colors} = useAppTheme();
 
   const Container = scrollable ? ScrollViewContainer : ViewContainer;
-
   return (
     <KeyboardAvoidingView
       style={{flex: 1}}
@@ -37,9 +36,11 @@ export function Screen({
           paddingHorizontal="s24"
           style={[{paddingTop: top, paddingBottom: bottom}, style]}
           {...boxProps}>
-          {canGoBack && (
-            <ScreenHeader HeaderComponent={HeaderComponent} title={title} />
-          )}
+          <ScreenHeader
+            HeaderComponent={HeaderComponent}
+            canGoBack={canGoBack}
+            title={title}
+          />
           {children}
         </Box>
       </Container>
