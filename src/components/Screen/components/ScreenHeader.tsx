@@ -13,6 +13,8 @@ export function ScreenHeader({title, canGoBack, HeaderComponent}: Props) {
     navigation.goBack();
   }
 
+  if(!title && !canGoBack && !HeaderComponent) return null;
+
   const showBackLabel = !title && !HeaderComponent;
   return (
     <Box
