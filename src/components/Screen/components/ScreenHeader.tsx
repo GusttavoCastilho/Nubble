@@ -2,18 +2,31 @@ import React from 'react';
 
 import {useNavigation} from '@react-navigation/native';
 
-import {Box, Icon, ScreenProps, Text, TouchableOpacityBox} from '@components';
+import {
+  Box,
+  BoxProps,
+  Icon,
+  ScreenProps,
+  Text,
+  TouchableOpacityBox,
+} from '@components';
 
-type Props = Pick<ScreenProps, 'title' | 'canGoBack' | 'HeaderComponent'>;
+type Props = Pick<ScreenProps, 'title' | 'canGoBack' | 'HeaderComponent'> &
+  BoxProps;
 
-export function ScreenHeader({title, canGoBack, HeaderComponent}: Props) {
+export function ScreenHeader({
+  title,
+  canGoBack,
+  HeaderComponent,
+  ...boxProps
+}: Props) {
   const navigation = useNavigation();
 
   function handleGoBack() {
     navigation.goBack();
   }
 
-  if(!title && !canGoBack && !HeaderComponent) return null;
+  if (!title && !canGoBack && !HeaderComponent) return null;
 
   const showBackLabel = !title && !HeaderComponent;
   return (
@@ -21,7 +34,8 @@ export function ScreenHeader({title, canGoBack, HeaderComponent}: Props) {
       flexDirection="row"
       alignItems="center"
       justifyContent="space-between"
-      mb="s24">
+      mb="s24"
+      {...boxProps}>
       {canGoBack && (
         <TouchableOpacityBox
           onPress={handleGoBack}
