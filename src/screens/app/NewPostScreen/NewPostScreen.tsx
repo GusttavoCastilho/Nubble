@@ -9,7 +9,7 @@ import {
 
 import {Screen} from '@components';
 import {AppTabScreenProps} from '@routes';
-import {useCameraRoll} from '@services';
+import {useCameraRoll, usePermission} from '@services';
 import {Header} from './components/Header';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
@@ -20,7 +20,11 @@ export function NewPostScreen({
   navigation,
 }: AppTabScreenProps<'NewPostScreen'>) {
   const [selectedImage, setSelectedImage] = useState('');
-  const {photoList, fetchNextPage} = useCameraRoll(true, setSelectedImage);
+  const permission = usePermission('photoLibrary');
+  const {photoList, fetchNextPage} = useCameraRoll(
+    permission.status === 'granted',
+    setSelectedImage,
+  );
 
   const flatListRef = useRef<FlatList>(null);
 
