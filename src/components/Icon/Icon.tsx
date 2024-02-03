@@ -34,6 +34,7 @@ import {ProfileIcon} from '../../assets/icons/ProfileIcon';
 import {SearchIcon} from '../../assets/icons/SearchIcon';
 import {SettingsIcon} from '../../assets/icons/SettingsIcon';
 import {TrashIcon} from '../../assets/icons/TrashIcon';
+import {CameraClick} from '../../assets/icons/CameraClick';
 import {Box} from '../Box/Box';
 
 export interface IconBase {
@@ -102,6 +103,7 @@ const iconRegistry = {
   search: SearchIcon,
   settings: SettingsIcon,
   trash: TrashIcon,
+  cameraClick: CameraClick,
 };
 
 type IconType = typeof iconRegistry;
