@@ -1,3 +1,3 @@
 export const images = {
-  imagePlaceholder: require('./image-placeholder.png'),
+  imagePlaceholder: require('./images/image_placeholder.png'),
 };

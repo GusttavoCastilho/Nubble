@@ -26,7 +26,7 @@ describe('<ScreenHeader />', () => {
   });
 
   it('should call goBack function when press back button', () => {
-    render(<ScreenHeader title="Test" />);
+    render(<ScreenHeader canGoBack title="Test" />);
 
     const backButton = screen.getByTestId('back-button');
 
@@ -36,7 +36,7 @@ describe('<ScreenHeader />', () => {
   });
 
   it('should render the text "Voltar" when title is not passed', () => {
-    render(<ScreenHeader />);
+    render(<ScreenHeader canGoBack />);
 
     const backButton = screen.getByText('Voltar');
 
