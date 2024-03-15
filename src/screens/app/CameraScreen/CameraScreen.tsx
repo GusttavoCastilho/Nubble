@@ -11,6 +11,7 @@ import {
   useCameraFormat,
 } from 'react-native-vision-camera';
 import {useIsFocused} from '@react-navigation/native';
+import {multimediaService} from '@services';
 
 const CAMERA_VIEW = Dimensions.get('screen').width;
 const CONTROL_HEIGHT = (Dimensions.get('screen').height - CAMERA_VIEW) / 2;
@@ -45,7 +46,7 @@ export function CameraScreen({navigation}: AppScreenProps<'CameraScreen'>) {
     });
 
     navigation.navigate('PublishPostScreen', {
-      imageUri: `file://${photoFile?.path}`,
+      imageUri: multimediaService.prepareImageUri(photoFile.path),
     });
   }
 
