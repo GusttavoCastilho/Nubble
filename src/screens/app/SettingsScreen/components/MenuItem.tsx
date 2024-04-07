@@ -15,7 +15,7 @@ export const MenuItem = ({label, onPress}: MenuItemProps) => {
       justifyContent="space-between"
       paddingVertical="s16"
       >
-      <Text>{label}</Text>
+      <Text semiBold>{label}</Text>
       <Icon name="chevronRight" />
     </PressableBox>
   );

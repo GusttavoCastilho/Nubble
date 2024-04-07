@@ -21,7 +21,7 @@ export function SettingsScreen({navigation}: AppScreenProps<'SettingsScreen'>) {
     },
     {
       label: 'Modo escuro',
-      onPress: () => {},
+      onPress: () => navigation.navigate("DarkModeScreen"),
     },
   ];
 
