@@ -40,34 +40,43 @@ import {Box} from '../Box/Box';
 export interface IconBase {
   size?: number;
   color?: string;
+  fillColor?: string;
 }
 
 export interface IconProps {
   name: IconName;
   color?: ThemeColors;
+  fillColor?: ThemeColors;
   size?: number;
   onPress?: () => void;
 }
 export function Icon({
   name,
   color = 'backgroundContrast',
+  fillColor = 'background',
   size,
   onPress,
 }: IconProps) {
   const {colors} = useAppTheme();
   const SVGIcon = iconRegistry[name];
 
+  const iconProps: React.ComponentProps<typeof SVGIcon> = {
+    color: colors[color],
+    size,
+    fillColor: colors[fillColor],
+  };
+
   if (onPress) {
     return (
       <Pressable testID={name} hitSlop={10} onPress={onPress}>
-        <SVGIcon color={colors[color]} size={size} />
+        <SVGIcon {...iconProps} />
       </Pressable>
     );
   }
 
   return (
     <Box testID={name}>
-      <SVGIcon color={colors[color]} size={size} />
+      <SVGIcon {...iconProps} />
     </Box>
   );
 }
