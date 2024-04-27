@@ -2,10 +2,10 @@ import {ViewStyle} from 'react-native';
 
 import {createTheme} from '@shopify/restyle';
 
-import {darkTheme} from './colors';
+import {darkTheme as darkThemeColors, lightTheme} from './colors';
 
 export const theme = createTheme({
-  colors: darkTheme,
+  colors: lightTheme,
   spacing: {
     s4: 4,
     s8: 8,
@@ -30,6 +30,11 @@ export const theme = createTheme({
     defaults: {},
   },
 });
+
+export const darkTheme = {
+  ...theme,
+  colors: darkThemeColors,
+};
 
 export const $shadowProps: ViewStyle = {
   elevation: 10,
