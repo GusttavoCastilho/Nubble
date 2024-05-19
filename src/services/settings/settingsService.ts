@@ -1,6 +1,7 @@
 import {Appearance, ColorSchemeName, Platform, StatusBar} from 'react-native';
 import {AppColorScheme, ThemePreference} from './settingsTypes';
 import {palette} from '@theme';
+import BootSplash from 'react-native-bootsplash';
 
 function onThemePreference(themePreference: ThemePreference): AppColorScheme {
   if (themePreference === 'system') {
@@ -36,8 +37,21 @@ function handleStatusBarColor(appColor: AppColorScheme) {
   }
 }
 
+async function hideSplashScreen() {
+  try {
+    const isVisible = await BootSplash.isVisible();
+
+    if (isVisible) {
+      await BootSplash.hide({fade: true});
+    }
+  } catch (error) {
+    BootSplash.hide();
+  }
+}
+
 export const settingsService = {
   onThemePreference,
   onSystemChange,
   handleStatusBarColor,
+  hideSplashScreen
 };
