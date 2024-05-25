@@ -2,7 +2,7 @@ import {Screen, Text} from '@components';
 import {AppScreenProps} from '@routes';
 import {useSettingsService, useThemePreference} from '@services';
 import React, {useState} from 'react';
-import {RadioButtonSelector} from 'src/components/RadioButton/RadioButtonSelector';
+import {RadioButtonSelector} from '@components';
 
 type ThemePreference = 'light' | 'dark' | 'system';
 

@@ -10,6 +10,7 @@ import {BellIcon} from '../../assets/icons/BellIcon';
 import {BellOnIcon} from '../../assets/icons/BellOnIcon';
 import {BookmarkFillIcon} from '../../assets/icons/BookmarkFillIcon';
 import {BookmarkIcon} from '../../assets/icons/BookmarkIcon';
+import {CameraClick} from '../../assets/icons/CameraClick';
 import {CameraIcon} from '../../assets/icons/CameraIcon';
 import {ChatIcon} from '../../assets/icons/ChatIcon';
 import {ChatOnIcon} from '../../assets/icons/ChatOnIcon';
@@ -34,8 +35,6 @@ import {ProfileIcon} from '../../assets/icons/ProfileIcon';
 import {SearchIcon} from '../../assets/icons/SearchIcon';
 import {SettingsIcon} from '../../assets/icons/SettingsIcon';
 import {TrashIcon} from '../../assets/icons/TrashIcon';
-import {CameraClick} from '../../assets/icons/CameraClick';
-import {Box} from '../Box/Box';
 
 export interface IconBase {
   size?: number;
@@ -61,8 +60,8 @@ export function Icon({
   const SVGIcon = iconRegistry[name];
 
   const iconProps: React.ComponentProps<typeof SVGIcon> = {
-    color: colors[color],
     size,
+    color: colors[color],
     fillColor: colors[fillColor],
   };
 
@@ -74,11 +73,7 @@ export function Icon({
     );
   }
 
-  return (
-    <Box testID={name}>
-      <SVGIcon {...iconProps} />
-    </Box>
-  );
+  return <SVGIcon {...iconProps} />;
 }
 
 const iconRegistry = {
@@ -89,6 +84,7 @@ const iconRegistry = {
   bookmark: BookmarkIcon,
   bookmarkFill: BookmarkFillIcon,
   camera: CameraIcon,
+  cameraClick: CameraClick,
   chat: ChatIcon,
   chatOn: ChatOnIcon,
   check: CheckIcon,
@@ -112,7 +108,6 @@ const iconRegistry = {
   search: SearchIcon,
   settings: SettingsIcon,
   trash: TrashIcon,
-  cameraClick: CameraClick,
 };
 
 type IconType = typeof iconRegistry;
