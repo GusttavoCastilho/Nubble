@@ -1,56 +1,28 @@
 import React from 'react';
-import {
-  FlatList,
-  ListRenderItemInfo,
-  RefreshControl,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import {ListRenderItemInfo, StyleProp, ViewStyle} from 'react-native';
 
-import {Post, usePostList} from '@domain';
-import {useScrollToTop} from '@react-navigation/native';
+import {Post, postService} from '@domain';
 
-import {PostItem, Screen} from '@components';
+import {InfinityScrollList, PostItem, Screen} from '@components';
 import {AppTabScreenProps} from '@routes';
 
-import {HomeEmpty} from './components/HomeEmpty';
 import {HomeHeader} from './components/HomeHeader';
+import {QueryKeys} from '@infra';
 
 export function HomeScreen({}: AppTabScreenProps<'HomeScreen'>) {
-  const {
-    list: postList,
-    isLoading,
-    isError,
-    refresh,
-    fetchNextPage,
-  } = usePostList();
-
-  const flatListRef = React.useRef<FlatList<Post>>(null);
-  useScrollToTop(flatListRef);
-
   function renderItem({item}: ListRenderItemInfo<Post>) {
     return <PostItem post={item} />;
   }
 
   return (
     <Screen style={$screen}>
-      <FlatList
-        ref={flatListRef}
-        data={postList}
-        keyExtractor={item => String(item.id)}
+      <InfinityScrollList
         renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-        onEndReached={fetchNextPage}
-        onEndReachedThreshold={0.1}
-        refreshControl={
-          <RefreshControl refreshing={isLoading} onRefresh={refresh} />
-        }
-        refreshing={isLoading}
-        contentContainerStyle={{flex: postList.length === 0 ? 1 : undefined}}
-        ListHeaderComponent={<HomeHeader />}
-        ListEmptyComponent={
-          <HomeEmpty loading={isLoading} error={isError} refetch={refresh} />
-        }
+        flatlistProps={{
+          ListHeaderComponent: <HomeHeader />,
+        }}
+        queryKey={QueryKeys.PostList}
+        getList={postService.getList}
       />
     </Screen>
   );
