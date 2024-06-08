@@ -21,6 +21,7 @@ export type AppStackParamList = {
   PostCommentScreen: {
     postId: number;
     postAuthorId: number;
+    showPost?: boolean;
   };
   ProfileScreen: {
     userId: number;

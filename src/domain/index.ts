@@ -6,6 +6,7 @@ export {POST_COMMENT_PATH} from './PostComment/postCommentApi';
 
 export * from './Post/useCases/usePostList';
 export * from './Post/useCases/usePostCreate';
+export * from './Post/useCases/usePostGetById';
 export * from './PostComment/useCases/usePostCommentList';
 export * from './PostComment/useCases/usePostCommentCreate';
 export * from './PostComment/useCases/usePostCommentRemove';

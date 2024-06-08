@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Box, Button, InfinityScrollList, Screen, Text} from '@components';
+import {InfinityScrollList, PressableBox, Screen, Text} from '@components';
 import {AppTabScreenProps} from '@routes';
 import {Dimensions, Image, ListRenderItemInfo} from 'react-native';
 import {PostReaction, postReactionService} from '@domain';
@@ -19,13 +19,22 @@ export function FavoriteScreen({
 }: AppTabScreenProps<'FavoriteScreen'>) {
   function renderItem({item}: ListRenderItemInfo<PostReaction>) {
     return (
-      <Box>
+      <PressableBox
+        onPress={() =>
+          navigation.navigate('PostCommentScreen', {
+            postId: item.post.id,
+            postAuthorId: item.author.id,
+            showPost: true,
+          })
+        }>
         <Image
           source={{uri: item.post.imageURL}}
           style={{width: ITEM_WIDTH, height: ITEM_WIDTH}}
         />
-        <Text mt="s4" semiBold>{item.author.username}</Text>
-      </Box>
+        <Text mt="s4" semiBold>
+          {item.author.username}
+        </Text>
+      </PressableBox>
     );
   }
 
