@@ -15,4 +15,5 @@ export const mockedPost: Post = {
   reactionCount: 8,
   text: 'this is the text (post description)',
   author: mockedAuthor,
+  reactions: [],
 };

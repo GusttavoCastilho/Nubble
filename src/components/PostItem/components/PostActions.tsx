@@ -4,14 +4,13 @@ import {Post} from '@domain';
 
 import {Box, Icon, IconProps, Text, TouchableOpacityBox} from '@components';
 
-type Props = Pick<Post, 'reactionCount' | 'commentCount' | 'favoriteCount'> & {
+type Props = {
+  post: Post;
   hideCommentAction?: boolean;
 };
 
 export function PostActions({
-  commentCount,
-  favoriteCount,
-  reactionCount,
+  post: {commentCount, favoriteCount, reactionCount},
   hideCommentAction,
 }: Props) {
   function likePost() {}
