@@ -1,21 +1,24 @@
 name: Pull Request Checks
 
 on:
+  workflow_dispatch:
+
+  workflow_call:
+
   pull_request:
     branches:
       - main
       - develop
-
 jobs:
   pull-request-checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '18'
 
       - name: Install Packages
         run: yarn install
@@ -24,7 +27,7 @@ jobs:
         run: yarn lint
 
       - name: Run TypeScript compiler
-        run: yarn tsc --noEmit
-
+       run: yarn tsc --noEmit
+       
       - name: Run test
         run: yarn test

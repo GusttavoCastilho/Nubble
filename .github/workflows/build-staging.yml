@@ -1,10 +1,14 @@
-name: Build Staging Version
+name: Build Staging (Android)
 
 on:
   workflow_dispatch:
 
 jobs:
+  run-checks:
+    uses: ./.github/workflows/pull-request-checks.yml
+
   build-android:
+    needs: run-checks
     runs-on: ubuntu-latest
     timeout-minutes: 30
     defaults:
@@ -35,16 +39,22 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
       
-      - name: Build APK
-        run: ./gradlew assembleRelease
+      - name: Build AAB
+        run: ./gradlew bundleRelease
         env:
           NUBBLE_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
           NUBBLE_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           NUBBLE_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       
-      - name: Upload APK to Artifact
+      - name: Decode Google Service Account JSON
+        run: echo ${{ secrets.ANDROID_SERVICE_ACCOUNT_BASE64 }} | base64 -d > google-service-account.json
+
+      - name: Upload AAB to Google Play
+        run: fastlane upload_internal
+      
+      - name: Upload AAB to Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release.apk
-          path: app/build/outputs/apk/release/app-release.apk
+          name: app-release.aab
+          path: app/build/outputs/bundle/release/app-release.aab
           retention-days: 7
